@@ -1,7 +1,7 @@
 {
   "name": "react-snow-overlay",
   "description": "A performant snowfall effect for your website using canvas and web workers",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": false,
   "sideEffects": false,
   "main": "packages/react-snow-overlay/dist/index.umd.js",

@@ -2,9 +2,9 @@
 
 ![](react-snow-overlay.webp)
 
-## DEMO: [TODO LINK]()
+## DEMO: [LINK](https://c-o-d-e-c-o-w-b-o-y.github.io/react-snow-overlay/docs/playground)
 
-## DOCS: [TODO LINK]()
+## DOCS: [LINK](https://c-o-d-e-c-o-w-b-o-y.github.io/react-snow-overlay/docs/installation)
 
 ### Installation
 
