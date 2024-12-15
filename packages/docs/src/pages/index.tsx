@@ -1,13 +1,12 @@
-import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import { Flex, List } from "@mantine/core";
+import { Playground } from "@site/src/components/Playground";
 import Heading from "@theme/Heading";
 import Layout from "@theme/Layout";
 import clsx from "clsx";
-import { Playground } from "@site/src/components/Playground";
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 
 import styles from "./index.module.css";
+import { InstallInstructions } from "@site/src/components/InstallInstructions";
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
@@ -15,17 +14,27 @@ function HomepageHeader() {
     <header className={clsx("hero hero--primary", styles.heroBanner)}>
       <div className="container">
         <Heading as="h1" className="hero__title">
-          {siteConfig.title}
+          🌨️ {siteConfig.title}
         </Heading>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro"
-          >
-            Docusaurus Tutorial - 5min ⏱️
-          </Link>
-        </div>
+        <List
+          icon="✅"
+          styles={{
+            root: {
+              textAlign: "left",
+              margin: "0 auto",
+              width: "fit-content",
+            },
+          }}
+        >
+          <List.Item>
+            Web Workers + Offscreen Canvas to keep your main thread chilling 😎
+          </List.Item>
+          <List.Item>No performance impact to your website ⚡️</List.Item>
+          <List.Item>0 dependencies ✨</List.Item>
+          <List.Item>Customizable 🎨 </List.Item>
+          <List.Item>Adds some festive fun ☃️</List.Item>
+        </List>
       </div>
     </header>
   );
@@ -35,12 +44,15 @@ export default function Home(): JSX.Element {
   const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />"
+      title={siteConfig.title}
+      description="A performant snowfall effect for your website using canvas and web workers"
     >
       <HomepageHeader />
       <main>
-        <Playground />
+        <Flex wrap="wrap" maw="100%" p="sm" gap="lg">
+          <InstallInstructions />
+          <Playground />
+        </Flex>
       </main>
     </Layout>
   );

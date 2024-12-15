@@ -3,8 +3,8 @@ import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
-  title: "My Site",
-  tagline: "Dinosaurs are cool",
+  title: "react-snow-overlay",
+  tagline: "A performant snowfall effect for your website",
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
@@ -44,13 +44,11 @@ const config: Config = {
   ],
 
   themeConfig: {
-    // Replace with your project's social card
-    image: "img/docusaurus-social-card.jpg",
     navbar: {
-      title: "My Site",
+      title: "react-snow-overlay",
       logo: {
-        alt: "My Site Logo",
-        src: "img/logo.svg",
+        alt: "",
+        src: "img/logo.png",
       },
       items: [
         {
@@ -60,7 +58,7 @@ const config: Config = {
           label: "Docs",
         },
         {
-          href: "https://github.com/facebook/docusaurus",
+          href: "https://github.com/C-o-d-e-C-o-w-b-o-y/react-snow-overlay",
           label: "GitHub",
           position: "right",
         },
