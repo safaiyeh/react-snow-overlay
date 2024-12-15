@@ -1,18 +1,18 @@
-import { CodeHighlight } from "@mantine/code-highlight";
-import { Flex, Tabs } from "@mantine/core";
-import React, { FC } from "react";
+import { CodeHighlight } from '@mantine/code-highlight';
+import { Flex, Tabs } from '@mantine/core';
+import React, { FC } from 'react';
 
 enum PkgManager {
-  NPM = "npm",
-  YARN = "yarn",
-  PNPM = "pnpm",
+  NPM = 'npm',
+  YARN = 'yarn',
+  PNPM = 'pnpm',
 }
 
 export const InstallInstructions: FC = () => (
   <Flex direction="column" maw={444}>
     <Tabs defaultValue={PkgManager.NPM}>
       <Tabs.List>
-        {Object.values(PkgManager).map((tab) => (
+        {Object.values(PkgManager).map(tab => (
           <Tabs.Tab value={tab} key={tab}>
             {tab}
           </Tabs.Tab>

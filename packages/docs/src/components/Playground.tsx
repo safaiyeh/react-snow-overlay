@@ -1,4 +1,4 @@
-import { CodeHighlight } from "@mantine/code-highlight";
+import { CodeHighlight } from '@mantine/code-highlight';
 import {
   Button,
   ColorInput,
@@ -6,16 +6,16 @@ import {
   Flex,
   NumberInput,
   Select,
-} from "@mantine/core";
-import { useDebouncedValue } from "@mantine/hooks";
-import { FC, useMemo, useState } from "react";
+} from '@mantine/core';
+import { useDebouncedValue } from '@mantine/hooks';
+import { FC, useMemo, useState } from 'react';
 
 import {
   DEFAULT_SNOW_OPTIONS,
   SNOW_OPTIONS_SPEED_MAP,
   SnowOverlay,
   SnowOverlayProps,
-} from "react-snow-overlay";
+} from 'react-snow-overlay';
 
 interface PlaygroundProps {
   showCode?: boolean;
@@ -29,25 +29,25 @@ export const Playground: FC<PlaygroundProps> = ({ showCode }) => {
 
   const code = useMemo(() => {
     const propsStr = Object.keys(debouncedSnowOverlayProps)
-      .map((prop) => {
+      .map(prop => {
         if (debouncedSnowOverlayProps[prop] == DEFAULT_SNOW_OPTIONS[prop]) {
           return null;
         }
 
-        if (typeof debouncedSnowOverlayProps[prop] === "object") {
+        if (typeof debouncedSnowOverlayProps[prop] === 'object') {
           return `${prop}={${JSON.stringify(debouncedSnowOverlayProps[prop], null, 2)}}`;
-        } else if (typeof debouncedSnowOverlayProps[prop] === "string") {
+        } else if (typeof debouncedSnowOverlayProps[prop] === 'string') {
           return `${prop}="${debouncedSnowOverlayProps[prop]}"`;
         } else {
           return `${prop}={${debouncedSnowOverlayProps[prop]}}`;
         }
       })
       .filter(Boolean)
-      .join(" ");
+      .join(' ');
 
     return `import { SnowOverlay } from 'react-snow-overlay';
     
-<SnowOverlay ${propsStr}${propsStr.length ? " " : ""}/>`;
+<SnowOverlay ${propsStr}${propsStr.length ? ' ' : ''}/>`;
   }, [debouncedSnowOverlayProps]);
 
   return (
@@ -55,7 +55,7 @@ export const Playground: FC<PlaygroundProps> = ({ showCode }) => {
       <SnowOverlay {...debouncedSnowOverlayProps} />
       <div
         style={{
-          maxWidth: "min(100%, 464px)",
+          maxWidth: 'min(100%, 464px)',
         }}
       >
         <Flex direction="column" gap="sm" maw={444}>
@@ -65,8 +65,8 @@ export const Playground: FC<PlaygroundProps> = ({ showCode }) => {
             label="Particle count"
             description="The maximum number of snow particles displayed on the screen at once. Note: High values may cause performance issues."
             value={snowOverlayProps.maxParticles}
-            onChange={(newParticles) =>
-              setSnowOverlayProps((p) => ({
+            onChange={newParticles =>
+              setSnowOverlayProps(p => ({
                 ...p,
                 maxParticles: Number(newParticles),
               }))
@@ -79,8 +79,8 @@ export const Playground: FC<PlaygroundProps> = ({ showCode }) => {
             description="Color of snow particles"
             placeholder={DEFAULT_SNOW_OPTIONS.color}
             value={snowOverlayProps.color as string}
-            onChange={(newColor) =>
-              setSnowOverlayProps((p) => ({
+            onChange={newColor =>
+              setSnowOverlayProps(p => ({
                 ...p,
                 color: newColor,
               }))
@@ -92,10 +92,10 @@ export const Playground: FC<PlaygroundProps> = ({ showCode }) => {
             description="How fast snow falls down the screen"
             data={Object.keys(SNOW_OPTIONS_SPEED_MAP)}
             value={snowOverlayProps.speed as string}
-            onChange={(newSpeedKey) =>
-              setSnowOverlayProps((p) => ({
+            onChange={newSpeedKey =>
+              setSnowOverlayProps(p => ({
                 ...p,
-                speed: newSpeedKey as SnowOverlayProps["speed"],
+                speed: newSpeedKey as SnowOverlayProps['speed'],
               }))
             }
           />

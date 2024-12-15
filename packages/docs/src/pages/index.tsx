@@ -1,17 +1,17 @@
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import { Flex, List } from "@mantine/core";
-import { Playground } from "@site/src/components/Playground";
-import Heading from "@theme/Heading";
-import Layout from "@theme/Layout";
-import clsx from "clsx";
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { Flex, List } from '@mantine/core';
+import { Playground } from '@site/src/components/Playground';
+import Heading from '@theme/Heading';
+import Layout from '@theme/Layout';
+import clsx from 'clsx';
 
-import styles from "./index.module.css";
-import { InstallInstructions } from "@site/src/components/InstallInstructions";
+import styles from './index.module.css';
+import { InstallInstructions } from '@site/src/components/InstallInstructions';
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
   return (
-    <header className={clsx("hero hero--primary", styles.heroBanner)}>
+    <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
         <Heading as="h1" className="hero__title">
           🌨️ {siteConfig.title}
@@ -21,9 +21,9 @@ function HomepageHeader() {
           icon="✅"
           styles={{
             root: {
-              textAlign: "left",
-              margin: "0 auto",
-              width: "fit-content",
+              textAlign: 'left',
+              margin: '0 auto',
+              width: 'fit-content',
             },
           }}
         >

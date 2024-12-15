@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef } from 'react';
 
 export const useDeepMemo = <T, V>(memoFn: () => T, key: V): T => {
   const ref = useRef<{ key: V; value: T }>();
@@ -19,8 +19,8 @@ const simpleDeepEqual = <T>(obj1: T, obj2: T): boolean => {
   if (
     obj1 === null ||
     obj2 === null ||
-    typeof obj1 !== "object" ||
-    typeof obj2 !== "object"
+    typeof obj1 !== 'object' ||
+    typeof obj2 !== 'object'
   ) {
     return false;
   }
@@ -32,7 +32,7 @@ const simpleDeepEqual = <T>(obj1: T, obj2: T): boolean => {
 
   if (
     keys1.some(
-      (key) => !keys2.includes(key) || !simpleDeepEqual(obj1[key], obj2[key])
+      key => !keys2.includes(key) || !simpleDeepEqual(obj1[key], obj2[key]),
     )
   ) {
     return false;

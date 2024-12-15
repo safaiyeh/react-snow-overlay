@@ -1,4 +1,4 @@
-import { DEFAULT_SNOW_OPTIONS } from "./constants";
+import { DEFAULT_SNOW_OPTIONS } from './constants';
 import {
   isSnowWorkerInitMsg,
   isSnowWorkerResumeMsg,
@@ -8,8 +8,8 @@ import {
   SnowOptions,
   SnowParticle,
   SnowWorkerMessage,
-} from "./types";
-import { getSpeedFromOptions } from "./utils/getSpeedFromOptions";
+} from './types';
+import { getSpeedFromOptions } from './utils/getSpeedFromOptions';
 
 // Snow display options
 let options: SnowOptions = {
@@ -32,7 +32,7 @@ self.onmessage = (event: MessageEvent<SnowWorkerMessage>) => {
 
   if (isSnowWorkerInitMsg(data)) {
     canvas = data.canvas;
-    ctx = canvas.getContext("2d")!;
+    ctx = canvas.getContext('2d')!;
 
     canvas.width = data.width;
     canvas.height = data.height;
@@ -44,7 +44,7 @@ self.onmessage = (event: MessageEvent<SnowWorkerMessage>) => {
 
     particles = Array.from(
       { length: options.maxParticles },
-      generateRandomParticle
+      generateRandomParticle,
     );
   } else if (isSnowWorkerUpdateSizeMsg(data)) {
     canvas.width = data.width;
@@ -143,7 +143,7 @@ const updateParticleCount = (newCount: number) => {
     return particles.splice(newCount, oldCount - newCount);
 
   particles.push(
-    ...Array.from({ length: newCount - oldCount }, generateRandomParticle)
+    ...Array.from({ length: newCount - oldCount }, generateRandomParticle),
   );
 };
 

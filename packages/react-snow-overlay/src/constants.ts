@@ -1,13 +1,13 @@
-import { SnowOptions } from "./types";
+import { SnowOptions } from './types';
 
 export const DEFAULT_SNOW_OPTIONS = Object.freeze({
-  color: "rgba(255, 255, 255, 0.8)",
+  color: 'rgba(255, 255, 255, 0.8)',
   maxParticles: 50,
-  speed: "DEFAULT",
+  speed: 'DEFAULT',
 } as const satisfies SnowOptions);
 
 export const SNOW_OPTIONS_SPEED_MAP: Record<
-  Extract<SnowOptions["speed"], string>,
+  Extract<SnowOptions['speed'], string>,
   number
 > = {
   DEFAULT: 33,

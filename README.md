@@ -15,7 +15,7 @@ npm install react-snow-overlay
 ### Usage
 
 ```jsx
-import { SnowOverlay } from "react-snow-overlay";
+import { SnowOverlay } from 'react-snow-overlay';
 
 <SnowOverlay />;
 ```

@@ -4,7 +4,7 @@ import {
   SnowWorkerMsgInit,
   SnowWorkerMsgUpdateOptions,
   SnowWorkerMsgUpdateSize,
-} from "./types";
+} from './types';
 
 export class SnowWorkerApi {
   #snowWorker: Worker;
@@ -19,17 +19,17 @@ export class SnowWorkerApi {
     });
   }
 
-  init(params: Omit<SnowWorkerMsgInit, "type">) {
+  init(params: Omit<SnowWorkerMsgInit, 'type'>) {
     this.#postMessage(
       {
         ...params,
         type: SnowWorkerMessageType.INIT,
       },
-      [params.canvas]
+      [params.canvas],
     );
   }
 
-  updateSize(params: Omit<SnowWorkerMsgUpdateSize, "type">) {
+  updateSize(params: Omit<SnowWorkerMsgUpdateSize, 'type'>) {
     this.#postMessage({
       ...params,
       type: SnowWorkerMessageType.UPDATE_SIZE,
@@ -48,7 +48,7 @@ export class SnowWorkerApi {
     });
   }
 
-  updateOptions(params: Omit<SnowWorkerMsgUpdateOptions, "type">) {
+  updateOptions(params: Omit<SnowWorkerMsgUpdateOptions, 'type'>) {
     this.#postMessage({
       ...params,
       type: SnowWorkerMessageType.UPDATE_OPTIONS,

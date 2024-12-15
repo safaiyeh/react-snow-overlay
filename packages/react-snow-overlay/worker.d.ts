@@ -1,4 +1,4 @@
-declare module "*?worker&inline" {
+declare module '*?worker&inline' {
   const WorkerFactory: {
     new (): Worker;
   };

@@ -1,14 +1,14 @@
 export type SnowParticle = { x: number; y: number; r: number; d: number };
 
 export interface SnowOptions {
-  color: CanvasFillStrokeStyles["fillStyle"];
+  color: CanvasFillStrokeStyles['fillStyle'];
   maxParticles: number;
   speed:
-    | "DEFAULT"
-    | "FAST"
-    | "FASTER"
+    | 'DEFAULT'
+    | 'FAST'
+    | 'FASTER'
     | {
-        speed: "custom";
+        speed: 'custom';
         msBetweenUpdates: number;
       };
 }
@@ -56,23 +56,23 @@ export type SnowWorkerMessage =
   | SnowWorkerMsgResume;
 
 export const isSnowWorkerInitMsg = (
-  msg: SnowWorkerMessage
+  msg: SnowWorkerMessage,
 ): msg is SnowWorkerMsgInit => msg.type === SnowWorkerMessageType.INIT;
 
 export const isSnowWorkerUpdateSizeMsg = (
-  msg: SnowWorkerMessage
+  msg: SnowWorkerMessage,
 ): msg is SnowWorkerMsgUpdateSize =>
   msg.type === SnowWorkerMessageType.UPDATE_SIZE;
 
 export const isSnowWorkerStopMsg = (
-  msg: SnowWorkerMessage
+  msg: SnowWorkerMessage,
 ): msg is SnowWorkerMsgStop => msg.type === SnowWorkerMessageType.STOP;
 
 export const isSnowWorkerUpdateOptionsMsg = (
-  msg: SnowWorkerMessage
+  msg: SnowWorkerMessage,
 ): msg is SnowWorkerMsgUpdateOptions =>
   msg.type === SnowWorkerMessageType.UPDATE_OPTIONS;
 
 export const isSnowWorkerResumeMsg = (
-  msg: SnowWorkerMessage
+  msg: SnowWorkerMessage,
 ): msg is SnowWorkerMsgResume => msg.type === SnowWorkerMessageType.RESUME;
