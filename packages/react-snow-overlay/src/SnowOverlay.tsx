@@ -6,7 +6,7 @@ import { SnowOptions } from "./types";
 import { useDebouncedCallback } from "./utils/useDebouncedCallback";
 import { useDeepMemo } from "./utils/useDeepMemo";
 
-export interface SnowOverlayProps extends SnowOptions {
+export interface SnowOverlayProps extends Partial<SnowOptions> {
   zIndex?: number;
 }
 
