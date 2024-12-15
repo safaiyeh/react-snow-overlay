@@ -1,6 +1,8 @@
 import { DEFAULT_SNOW_OPTIONS } from "./constants";
 import {
   isSnowWorkerInitMsg,
+  isSnowWorkerResumeMsg,
+  isSnowWorkerStopMsg,
   isSnowWorkerUpdateOptionsMsg,
   isSnowWorkerUpdateSizeMsg,
   SnowOptions,
@@ -23,6 +25,7 @@ let lastUpdateTime = -Infinity;
 let animationRequestId: number | null = null;
 let canvas: OffscreenCanvas;
 let ctx: OffscreenCanvasRenderingContext2D;
+let disabled = false;
 
 self.onmessage = (event: MessageEvent<SnowWorkerMessage>) => {
   const { data } = event;
@@ -39,12 +42,10 @@ self.onmessage = (event: MessageEvent<SnowWorkerMessage>) => {
       ...data.options,
     };
 
-    particles = [...Array(options.maxParticles)].map(() => ({
-      x: Math.random() * data.width,
-      y: Math.random() * -data.height,
-      r: Math.random() * 4 + 1,
-      d: Math.random() * options.maxParticles,
-    }));
+    particles = Array.from(
+      { length: options.maxParticles },
+      generateRandomParticle
+    );
   } else if (isSnowWorkerUpdateSizeMsg(data)) {
     canvas.width = data.width;
     canvas.height = data.height;
@@ -53,8 +54,18 @@ self.onmessage = (event: MessageEvent<SnowWorkerMessage>) => {
 
     options = {
       ...options,
-      ...newSnowOptions,
-    };
+      ...newSnowOptions.options,
+    } satisfies SnowOptions;
+
+    updateParticleCount(options.maxParticles);
+  } else if (isSnowWorkerStopMsg(data)) {
+    disabled = true;
+    const { width, height } = ctx.canvas;
+    ctx.clearRect(0, 0, width, height);
+    if (animationRequestId) cancelAnimationFrame(animationRequestId);
+    return;
+  } else if (isSnowWorkerResumeMsg(data)) {
+    disabled = false;
   }
 
   const updateSnow = () => {
@@ -113,12 +124,32 @@ self.onmessage = (event: MessageEvent<SnowWorkerMessage>) => {
     }
     lastUpdateTime = performance.now();
 
-    animationRequestId = requestAnimationFrame(updateSnow);
+    if (!disabled) {
+      animationRequestId = requestAnimationFrame(updateSnow);
+    }
   };
 
-  if (animationRequestId) {
-    cancelAnimationFrame(animationRequestId);
-  }
+  if (animationRequestId) cancelAnimationFrame(animationRequestId);
 
-  requestAnimationFrame(updateSnow);
+  if (!disabled) requestAnimationFrame(updateSnow);
 };
+
+const updateParticleCount = (newCount: number) => {
+  const oldCount = particles.length;
+
+  if (newCount === oldCount) return;
+
+  if (newCount < oldCount)
+    return particles.splice(newCount, oldCount - newCount);
+
+  particles.push(
+    ...Array.from({ length: newCount - oldCount }, generateRandomParticle)
+  );
+};
+
+const generateRandomParticle = () => ({
+  x: Math.random() * canvas.width,
+  y: Math.random() * -canvas.height,
+  r: Math.random() * 4 + 1,
+  d: Math.random() * options.maxParticles,
+});

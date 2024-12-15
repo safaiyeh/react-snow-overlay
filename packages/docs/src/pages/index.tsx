@@ -1,10 +1,11 @@
-import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
-import Layout from "@theme/Layout";
-import HomepageFeatures from "@site/src/components/HomepageFeatures";
 import Heading from "@theme/Heading";
-import { SnowOverlay } from "react-snow-overlay";
+import Layout from "@theme/Layout";
+import clsx from "clsx";
+import { Playground } from "@site/src/components/Playground";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 import styles from "./index.module.css";
 
@@ -37,10 +38,9 @@ export default function Home(): JSX.Element {
       title={`Hello from ${siteConfig.title}`}
       description="Description will go into a meta tag in <head />"
     >
-      <SnowOverlay />
       <HomepageHeader />
       <main>
-        <HomepageFeatures />
+        <Playground />
       </main>
     </Layout>
   );

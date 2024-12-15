@@ -21,3 +21,10 @@
   align-items: center;
   justify-content: center;
 }
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 16px;
+}

@@ -5,9 +5,8 @@ export interface SnowOptions {
   maxParticles: number;
   speed:
     | "DEFAULT"
-    | "SLOW"
     | "FAST"
-    | "ULTRAFAST"
+    | "FASTER"
     | {
         speed: "custom";
         msBetweenUpdates: number;
@@ -19,6 +18,7 @@ export enum SnowWorkerMessageType {
   UPDATE_SIZE,
   STOP,
   UPDATE_OPTIONS,
+  RESUME,
 }
 
 export type SnowWorkerMsgInit = {
@@ -39,6 +39,10 @@ export type SnowWorkerMsgStop = {
   type: SnowWorkerMessageType.STOP;
 };
 
+export type SnowWorkerMsgResume = {
+  type: SnowWorkerMessageType.RESUME;
+};
+
 export type SnowWorkerMsgUpdateOptions = {
   type: SnowWorkerMessageType.UPDATE_OPTIONS;
   options: Partial<SnowOptions>;
@@ -48,7 +52,8 @@ export type SnowWorkerMessage =
   | SnowWorkerMsgInit
   | SnowWorkerMsgUpdateSize
   | SnowWorkerMsgStop
-  | SnowWorkerMsgUpdateOptions;
+  | SnowWorkerMsgUpdateOptions
+  | SnowWorkerMsgResume;
 
 export const isSnowWorkerInitMsg = (
   msg: SnowWorkerMessage
@@ -67,3 +72,7 @@ export const isSnowWorkerUpdateOptionsMsg = (
   msg: SnowWorkerMessage
 ): msg is SnowWorkerMsgUpdateOptions =>
   msg.type === SnowWorkerMessageType.UPDATE_OPTIONS;
+
+export const isSnowWorkerResumeMsg = (
+  msg: SnowWorkerMessage
+): msg is SnowWorkerMsgResume => msg.type === SnowWorkerMessageType.RESUME;

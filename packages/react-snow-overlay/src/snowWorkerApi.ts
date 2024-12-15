@@ -2,7 +2,6 @@ import {
   SnowWorkerMessage,
   SnowWorkerMessageType,
   SnowWorkerMsgInit,
-  SnowWorkerMsgStop,
   SnowWorkerMsgUpdateOptions,
   SnowWorkerMsgUpdateSize,
 } from "./types";
@@ -37,10 +36,15 @@ export class SnowWorkerApi {
     });
   }
 
-  stop(params: Omit<SnowWorkerMsgStop, "type">) {
+  stop() {
     this.#postMessage({
-      ...params,
       type: SnowWorkerMessageType.STOP,
+    });
+  }
+
+  resume() {
+    this.#postMessage({
+      type: SnowWorkerMessageType.RESUME,
     });
   }
 

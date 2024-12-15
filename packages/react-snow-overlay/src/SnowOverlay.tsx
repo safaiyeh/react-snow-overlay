@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useReducer, useRef } from "react";
+import { FC, memo, useEffect, useMemo, useReducer, useRef } from "react";
 import { DEFAULT_Z_INDEX, RESIZE_DEBOUNCE_DELAY_MS } from "./constants";
 import SnowWorker from "./snowWorker.ts?worker&inline";
 import { SnowWorkerApi } from "./snowWorkerApi";
@@ -8,10 +8,14 @@ import { useDeepMemo } from "./utils/useDeepMemo";
 
 export interface SnowOverlayProps extends Partial<SnowOptions> {
   zIndex?: number;
+  disabled?: boolean;
+  disabledOnSingleCpuDevices?: boolean;
 }
 
 export const SnowOverlay: FC<SnowOverlayProps> = memo(function SnowOverlay({
   zIndex = DEFAULT_Z_INDEX,
+  disabled: disabledProp,
+  disabledOnSingleCpuDevices,
   ...snowOptions
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -62,10 +66,35 @@ export const SnowOverlay: FC<SnowOverlayProps> = memo(function SnowOverlay({
     return () => window.removeEventListener("resize", updateDimensions);
   }, [updateDimensions]);
 
+  const disabled = useMemo(() => {
+    const disabledViaProp = Boolean(disabledProp);
+
+    // If the browser only has a single CPU core, disable for perf
+    // since worker cannot run on seperate thread
+    const disabledDueToCpuCores =
+      disabledOnSingleCpuDevices &&
+      typeof navigator !== "undefined" &&
+      navigator.hardwareConcurrency === 1;
+
+    return disabledViaProp || disabledDueToCpuCores;
+  }, [disabledOnSingleCpuDevices, disabledProp]);
+
   useEffect(() => {
-    if (!workerInitialized) return;
-    snowWorkerApiRef.current?.updateOptions({ options: memoizedSnowOptions });
-  }, [memoizedSnowOptions, workerInitialized]);
+    if (
+      !workerInitialized ||
+      !offscreenCanvasRef.current ||
+      !snowWorkerApiRef.current
+    )
+      return;
+
+    if (disabled) return snowWorkerApiRef.current.stop();
+
+    snowWorkerApiRef.current.updateOptions({ options: memoizedSnowOptions });
+  }, [disabled, memoizedSnowOptions, workerInitialized]);
+
+  useEffect(() => {
+    snowWorkerApiRef.current?.[disabled ? "stop" : "resume"]();
+  }, [disabled]);
 
   return (
     <canvas
@@ -80,6 +109,7 @@ export const SnowOverlay: FC<SnowOverlayProps> = memo(function SnowOverlay({
         right: 0,
         bottom: 0,
         left: 0,
+        ...(disabled && { display: "none" }),
       }}
     />
   );

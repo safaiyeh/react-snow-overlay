@@ -1,3 +1,8 @@
+body {
+  /* Undo mantine provider styles */
+  background: unset !important;
+}
+
 :root {
   --ifm-color-primary: #bdbdbd;
   --ifm-color-primary-dark: #aaaaaa;

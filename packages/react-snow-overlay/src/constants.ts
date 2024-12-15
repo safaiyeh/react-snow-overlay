@@ -10,10 +10,9 @@ export const SNOW_OPTIONS_SPEED_MAP: Record<
   Extract<SnowOptions["speed"], string>,
   number
 > = {
-  SLOW: 50,
   DEFAULT: 33,
   FAST: 20,
-  ULTRAFAST: 10,
+  FASTER: 10,
 };
 
 export const DEFAULT_Z_INDEX = 2 ** 31 - 1; // Max z-index (largest signed 32-bit int)
