@@ -19,9 +19,14 @@ export default defineConfig({
         },
       },
     },
-    sourcemap: true,
+    sourcemap: false,
     emptyOutDir: true,
   },
 
-  plugins: [react(), dts()],
+  plugins: [
+    react(),
+    dts({
+      rollupTypes: true,
+    }),
+  ],
 });
