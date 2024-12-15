@@ -1,6 +1,19 @@
 {
   "name": "react-snow-overlay",
-  "private": true,
+  "private": false,
+  "main": "packages/react-snow-overlay/dist/index.umd.js",
+  "module": "packages/react-snow-overlay/dist/index.es.js",
+  "types": "packages/react-snow-overlay/dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./packages/react-snow-overlay/dist/index.es.js",
+      "require": "./packages/react-snow-overlay/dist/index.umd.js",
+      "types": "./packages/react-snow-overlay/dist/index.d.ts"
+    }
+  },
+  "files": [
+    "packages/react-snow-overlay/dist"
+  ],
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
