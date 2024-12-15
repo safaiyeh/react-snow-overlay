@@ -1,17 +1,30 @@
-import { FC, useLayoutEffect, useRef } from "react";
+import { FC, memo, useEffect, useReducer, useRef } from "react";
+import { DEFAULT_Z_INDEX, RESIZE_DEBOUNCE_DELAY_MS } from "./constants";
+import SnowWorker from "./snowWorker.ts?worker&inline";
+import { SnowWorkerApi } from "./snowWorkerApi";
+import { SnowOptions } from "./types";
 import { useDebouncedCallback } from "./utils/useDebouncedCallback";
+import { useDeepMemo } from "./utils/useDeepMemo";
 
-// @ts-ignore
-import InlineWorker from "./snowWorker.ts?worker&inline";
+export interface SnowOverlayProps extends SnowOptions {
+  zIndex?: number;
+}
 
-interface SnowOverlayProps {}
-
-export const SnowOverlay: FC<SnowOverlayProps> = ({}) => {
+export const SnowOverlay: FC<SnowOverlayProps> = memo(function SnowOverlay({
+  zIndex = DEFAULT_Z_INDEX,
+  ...snowOptions
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const offscreenCanvasRef = useRef<OffscreenCanvas | null>(null);
-  const workerRef = useRef<Worker | null>(null);
+  const snowWorkerApiRef = useRef<SnowWorkerApi | null>(null);
+  const [workerInitialized, setWorkerInitialized] = useReducer(
+    () => true,
+    false
+  );
 
-  const updateWorker = useDebouncedCallback(() => {
+  const memoizedSnowOptions = useDeepMemo(() => snowOptions, [snowOptions]);
+
+  const updateDimensions = useDebouncedCallback(() => {
     if (
       typeof window === "undefined" ||
       // If browser doesn't support OffscreenCanvas, don't bother
@@ -23,41 +36,43 @@ export const SnowOverlay: FC<SnowOverlayProps> = ({}) => {
     offscreenCanvasRef.current ??=
       canvasRef.current.transferControlToOffscreen();
 
-    if (!workerRef.current) {
-      workerRef.current = new InlineWorker();
+    if (!snowWorkerApiRef.current) {
+      snowWorkerApiRef.current = new SnowWorkerApi(new SnowWorker());
+      setWorkerInitialized();
 
       const canvas = offscreenCanvasRef.current;
-      workerRef.current!.postMessage(
-        {
-          canvas,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        },
-        [canvas]
-      );
+
+      return snowWorkerApiRef.current.init({
+        canvas,
+        width: window.innerWidth,
+        height: window.innerHeight,
+        options: memoizedSnowOptions,
+      });
     }
 
-    workerRef.current!.postMessage({
+    snowWorkerApiRef.current.updateSize({
       width: window.innerWidth,
       height: window.innerHeight,
     });
-  }, 50);
+  }, RESIZE_DEBOUNCE_DELAY_MS);
 
-  useLayoutEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-    updateWorker();
-    window.addEventListener("resize", updateWorker);
-    return () => window.removeEventListener("resize", updateWorker);
-  }, [updateWorker]);
+  useEffect(() => {
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, [updateDimensions]);
+
+  useEffect(() => {
+    if (!workerInitialized) return;
+    snowWorkerApiRef.current?.updateOptions({ options: memoizedSnowOptions });
+  }, [memoizedSnowOptions, workerInitialized]);
 
   return (
     <canvas
       aria-hidden="true"
       ref={canvasRef}
       style={{
-        zIndex: 2 ** 31 - 1, // Max 32-bit integer
+        zIndex,
         pointerEvents: "none",
         userSelect: "none",
         position: "fixed",
@@ -68,4 +83,4 @@ export const SnowOverlay: FC<SnowOverlayProps> = ({}) => {
       }}
     />
   );
-};
+});

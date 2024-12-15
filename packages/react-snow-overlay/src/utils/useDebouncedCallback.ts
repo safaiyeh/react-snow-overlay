@@ -18,11 +18,10 @@ export const useDebouncedCallback = <T extends (...args: unknown[]) => void>(
     [callback, delay]
   );
 
-  useEffect(() => () => {
-    if (timeoutRef.current !== null) {
-      clearTimeout(timeoutRef.current);
-    }
-  });
+  useEffect(
+    () => () =>
+      void (timeoutRef.current !== null && clearTimeout(timeoutRef.current))
+  );
 
   return debouncedCallback;
 };
