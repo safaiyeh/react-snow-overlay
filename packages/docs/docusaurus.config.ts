@@ -55,6 +55,11 @@ const config: Config = {
           label: 'Docs',
         },
         {
+          href: 'https://www.npmjs.com/package/react-snow-overlay',
+          label: 'npm',
+          position: 'right',
+        },
+        {
           href: 'https://github.com/C-o-d-e-C-o-w-b-o-y/react-snow-overlay',
           label: 'GitHub',
           position: 'right',
