@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, memo, useEffect, useMemo, useReducer, useRef } from 'react';
 import { DEFAULT_Z_INDEX, RESIZE_DEBOUNCE_DELAY_MS } from './constants';
 import SnowWorker from './snowWorker.ts?worker&inline';
