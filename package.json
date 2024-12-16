@@ -1,8 +1,14 @@
 {
   "name": "react-snow-overlay",
   "description": "A performant snowfall effect for your website using canvas and web workers",
-  "version": "1.0.4",
+  "version": "1.0.5",
+  "author": "Matthew Williams realcodecowboy@gmail.com (https://github.com/C-o-d-e-C-o-w-b-o-y)",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/C-o-d-e-C-o-w-b-o-y/react-snow-overlay.git"
+  },
+  "homepage": "https://C-o-d-e-C-o-w-b-o-y.github.io/react-snow-overlay",
   "private": false,
   "sideEffects": false,
   "main": "packages/react-snow-overlay/dist/index.umd.js",
