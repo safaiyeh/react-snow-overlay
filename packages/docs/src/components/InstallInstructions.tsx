@@ -9,7 +9,7 @@ enum PkgManager {
 }
 
 export const InstallInstructions: FC = () => (
-  <Flex direction="column" maw={444}>
+  <Flex direction="column" maw="100%">
     <Tabs defaultValue={PkgManager.NPM}>
       <Tabs.List>
         {Object.values(PkgManager).map(tab => (
