@@ -1,6 +1,6 @@
 # 🌨️ react-snow-overlay
 
-![](react-snow-overlay.webp)
+![](https://raw.githubusercontent.com/C-o-d-e-C-o-w-b-o-y/react-snow-overlay/refs/heads/main/react-snow-overlay.webp)
 
 ## DEMO: [LINK](https://c-o-d-e-c-o-w-b-o-y.github.io/react-snow-overlay/docs/playground)
 
