@@ -54,4 +54,8 @@ export class SnowWorkerApi {
       type: SnowWorkerMessageType.UPDATE_OPTIONS,
     });
   }
+
+  terminate() {
+    this.#snowWorker.terminate();
+  }
 }

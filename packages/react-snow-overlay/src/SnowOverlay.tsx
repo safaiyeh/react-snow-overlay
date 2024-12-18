@@ -98,6 +98,8 @@ export const SnowOverlay: FC<SnowOverlayProps> = memo(function SnowOverlay({
     snowWorkerApiRef.current?.[disabled ? 'stop' : 'resume']();
   }, [disabled]);
 
+  useEffect(() => snowWorkerApiRef.current?.terminate, []);
+
   return (
     <canvas
       aria-hidden="true"
