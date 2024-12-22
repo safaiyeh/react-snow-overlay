@@ -104,16 +104,17 @@ self.onmessage = (event: MessageEvent<SnowWorkerMessage>) => {
             d: p.d,
           };
         } else {
+          const edgeOffset = Math.random() * width;
           if (Math.sin(angle) > 0) {
             particles[i] = {
-              x: -5,
+              x: -5 - edgeOffset,
               y: Math.random() * height,
               r: p.r,
               d: p.d,
             };
           } else {
             particles[i] = {
-              x: width + 5,
+              x: width + 5 + edgeOffset,
               y: Math.random() * height,
               r: p.r,
               d: p.d,
