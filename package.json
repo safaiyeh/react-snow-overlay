@@ -17,8 +17,7 @@
   "exports": {
     ".": {
       "import": "./packages/react-snow-overlay/dist/index.es.js",
-      "require": "./packages/react-snow-overlay/dist/index.umd.js",
-      "types": "./packages/react-snow-overlay/dist/index.d.ts"
+      "require": "./packages/react-snow-overlay/dist/index.umd.js"
     }
   },
   "files": [
