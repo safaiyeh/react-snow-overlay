@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
 export const useDeepMemo = <T, V>(memoFn: () => T, key: V): T => {
-  const ref = useRef<{ key: V; value: T }>();
+  const ref = useRef<{ key: V; value: T } | null>(null);
 
   if (!ref.current || !simpleDeepEqual(key, ref.current.key))
     ref.current = { key, value: memoFn() };
