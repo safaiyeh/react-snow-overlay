@@ -90,10 +90,19 @@ self.onmessage = (event: MessageEvent<SnowWorkerMessage>) => {
     ctx.fill();
 
     angle = (angle + 0.01) % 360;
+
+    // Pre-calculate trigonometric values once per frame to avoid repeated calculations
+    const sinAngle = Math.sin(angle);
+    const cosAngle = Math.cos(angle);
+
     for (let i = 0; i < options.maxParticles; i++) {
       const p = particles[i];
-      p.y += Math.cos(angle + p.d) + 1 + p.r / 2;
-      p.x += Math.sin(angle) * 2;
+      // Use trigonometric identity: cos(a + b) = cos(a)cos(b) - sin(a)sin(b)
+      // Using pre-calculated sin(p.d) and cos(p.d) from particle properties
+      const cosAngleWithDisplacement = cosAngle * p.cosD - sinAngle * p.sinD;
+      p.y += cosAngleWithDisplacement + 1 + p.r / 2;
+      // Use pre-calculated sinAngle for horizontal movement
+      p.x += sinAngle * 2;
 
       if (p.x > width + 5 || p.x < -5 || p.y > height) {
         if (i % 3 > 0) {
@@ -102,15 +111,19 @@ self.onmessage = (event: MessageEvent<SnowWorkerMessage>) => {
             y: -10,
             r: p.r,
             d: p.d,
+            sinD: p.sinD,
+            cosD: p.cosD,
           };
         } else {
           const edgeOffset = Math.random() * width;
-          if (Math.sin(angle) > 0) {
+          if (sinAngle > 0) {
             particles[i] = {
               x: -5 - edgeOffset,
               y: Math.random() * height,
               r: p.r,
               d: p.d,
+              sinD: p.sinD,
+              cosD: p.cosD,
             };
           } else {
             particles[i] = {
@@ -118,6 +131,8 @@ self.onmessage = (event: MessageEvent<SnowWorkerMessage>) => {
               y: Math.random() * height,
               r: p.r,
               d: p.d,
+              sinD: p.sinD,
+              cosD: p.cosD,
             };
           }
         }
@@ -148,9 +163,15 @@ const updateParticleCount = (newCount: number) => {
   );
 };
 
-const generateRandomParticle = () => ({
-  x: Math.random() * canvas.width,
-  y: Math.random() * -canvas.height,
-  r: Math.random() * 4 + 1,
-  d: Math.random() * options.maxParticles,
-});
+const generateRandomParticle = () => {
+  const d = Math.random() * options.maxParticles;
+  return {
+    x: Math.random() * canvas.width,
+    y: Math.random() * -canvas.height,
+    r: Math.random() * 4 + 1,
+    d,
+    // Pre-calculate trigonometric values for this particle's displacement
+    sinD: Math.sin(d),
+    cosD: Math.cos(d),
+  };
+};
