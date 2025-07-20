@@ -1,4 +1,12 @@
-export type SnowParticle = { x: number; y: number; r: number; d: number };
+export type SnowParticle = {
+  x: number;
+  y: number;
+  r: number;
+  d: number;
+  // Pre-calculated trigonometric values for performance optimization
+  sinD: number;
+  cosD: number;
+};
 
 export interface SnowOptions {
   color: CanvasFillStrokeStyles['fillStyle'];
